@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { connection } from "../data/baseDataBase";
 import { User } from "../types";
 
-export default async function getUser(req:Request, res:Response) :Promise<any>{
+export default async function putUser(req:Request, res:Response) :Promise<any>{
     let statusCode = 400
     try {
         
@@ -11,13 +11,13 @@ export default async function getUser(req:Request, res:Response) :Promise<any>{
             res.statusCode = 422
     throw new Error("Precisa inserir o valor do id!");
         }
-        if(typeof id !== "number"){
-            res.statusCode = 400
-    throw new Error("Id não encontardo!");
-        }
+      if(!name || !nickname){
+        res.statusCode = 422
+        throw new Error("Os campos name e nickname, precisa estarem preenchidos");
+      }
         await connection("TodoListUser")
-        .select({
-            id,
+        .update({
+            name,
             nickname,
         }).where({id: req.params.id})
     
