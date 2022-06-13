@@ -2,6 +2,7 @@ import express, {Express} from 'express';
 import { AddressInfo } from "net";
 import cors from 'cors'
 import postUser from './endpoints/postUser';
+import postTask from './endpoints/postTask';
 import getUser from './endpoints/getUser';
 import putUser from './endpoints/putUser';
 
@@ -19,6 +20,8 @@ app.get("/user/:id", getUser)
 //3. Editar usuário
 app.put("/user/edit/:id", putUser)
 
+//4. Criar tarefa
+app.post("/task", postTask)
 
 const server = app.listen(process.env.PORT || 3003, () => {
     if (server) {
